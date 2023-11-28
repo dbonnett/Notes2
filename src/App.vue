@@ -1,16 +1,16 @@
 <template>
   <div>
-    <BasicNote/>
+    <main-calendar/>
   </div>
 </template>
 
 <script>
-import BasicNote from './components/BasicNote.vue';
+import MainCalendar from './views/MainCalendar.vue';
 
 export default {
   name: 'App',
   components: {
-    BasicNote
+    MainCalendar
   }
 }
 </script>

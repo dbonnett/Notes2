@@ -1,10 +1,14 @@
 <template>
   <div class="basic-note">
-    <h2>Here's a nice little icon</h2>
+    <h2>{{ $store.state.name }}</h2>
     <img src="./../../public/1024824.png" alt="img not found">
-    <textarea name="note" id="note" cols="30" rows="10" v-model.lazy="note"></textarea>
+    <textarea name="note" id="note" cols="30" rows="10" v-model="typed" v-on:keyup.enter.prevent="enter"></textarea>
     <h2>What you just typed:</h2>
-    <p>{{ note }}</p>
+    <div class="note">
+      <p>{{ posted }}</p>
+    </div>
+    <p>{{ $store.state.date }}</p>
+    <p>{{ $store.state.date.getFullYear() }}</p>
   </div>
 </template>
 
@@ -13,7 +17,19 @@
     name: "basic-note",
     data() {
       return {
-        note: ""
+        typed: "",
+        posted: "",
+        time: 0
+      }
+    },
+    methods: {
+      enter() {
+        this.posted = this.typed;
+        this.typed = "";
+        this.updateTime();
+      },
+      updateTime() {
+        this.$store.commit('UPDATE_TIME');
       }
     }
   }
@@ -22,5 +38,11 @@
 <style>
   h2 {
     color: green;
+  }
+  textarea {
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .note {
+    height: 20px;
   }
 </style>
