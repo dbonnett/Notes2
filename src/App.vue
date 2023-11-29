@@ -1,15 +1,22 @@
 <template>
   <div>
     <main-calendar/>
+    <main-note></main-note>
+    <li class="note">
+      <router-link to="/note">Make a note</router-link>
+    </li>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import MainCalendar from './views/MainCalendar.vue';
+import MainNote from './views/MainNote.vue'
 
 export default {
   name: 'App',
   components: {
+    MainNote,
     MainCalendar
   }
 }
