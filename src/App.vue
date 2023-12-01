@@ -1,34 +1,37 @@
 <template>
-  <div>
-    <main-calendar/>
-    <main-note></main-note>
-    <li class="note">
-      <router-link to="/note">Make a note</router-link>
-    </li>
-    <router-view/>
-  </div>
+  <h1>App</h1>
+  <router-view/>
 </template>
 
 <script>
-import MainCalendar from './views/MainCalendar.vue';
-import MainNote from './views/MainNote.vue'
+import MainCalendar from './views/MainCalendar.vue'
 
 export default {
   name: 'App',
-  components: {
-    MainNote,
-    MainCalendar
-  }
+  components: MainCalendar
 }
 </script>
 
 <style>
-#app {
+
+    MainCalendar#app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+nav a.router-link-exact-active {
+  color: #42b983;
 }
 </style>

@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: "basic-note",
+    name: "BasicNote",
     data() {
       return {
         typed: "",

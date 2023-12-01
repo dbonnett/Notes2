@@ -18,6 +18,7 @@
       <div v-bind:class="{'today': isFriday}"></div>
       <div v-bind:class="{'today': isSaturday}"></div>
     </div>
+    <router-link v-bind:to="{name: 'note'}">Make a note</router-link>
   </div>
 </template>
 
@@ -107,6 +108,7 @@ export default {
 
   .heading > div {
     background-color: rgb(144, 224, 197);
+    text-align: center;
     margin: 15px;
     margin-bottom: 0px;
     width: 100%;
