@@ -1,17 +1,17 @@
 <template>
   <div class="main-note">
-    <basic-note></basic-note>
+    <all-attributes-note/>
     <router-link to="/">Back to calendar</router-link>
   </div>
 </template>
 
 <script>
-import BasicNote from '../components/BasicNote.vue'
+import AllAttributesNote from '@/components/AllAttributesNote.vue'
+//import BasicNote from '../components/BasicNote.vue'
 export default {
-  components: { BasicNote },
+  components: { AllAttributesNote },
 }
 </script>
 
 <style>
-
 </style>

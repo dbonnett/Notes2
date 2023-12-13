@@ -1,7 +1,6 @@
 <template>
   <div class="basic-note">
     <h2>{{ $store.state.name }}</h2>
-    <img src="./../../public/1024824.png" alt="img not found">
     <textarea name="note" id="note" cols="30" rows="10" v-model="typed" v-on:keyup.enter.prevent="enter"></textarea>
     <h2>What you just typed:</h2>
     <div class="note">
