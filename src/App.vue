@@ -1,38 +1,34 @@
 <template>
   <h1>App</h1>
-  <router-view/>
+  <div class="all">
+    <aside-first id="aside"></aside-first>
+    <router-view class="view"/>
+  </div>
 </template>
 
 <script>
-import MainCalendar from './views/MainCalendar.vue'
+import AsideFirst from './components/AsideFirst.vue'
 
 export default {
+  components: { AsideFirst },
   name: 'App',
-  components: MainCalendar
 }
 </script>
 
 <style>
 
-    MainCalendar#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  height: 100%;
+.all {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
-nav {
-  padding: 30px;
+#aside {
+  width: 200px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.view {
+  width: 100%;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

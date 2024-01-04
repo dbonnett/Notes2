@@ -1,10 +1,10 @@
 <template>
-  <div class="pretty-calendar">
-    <h1>Pretty Calendar</h1>
-    <div class="body">
+  <div class="pretty-calendar"  v-on:click="thisDay">
+    <h1 id="month">{{ months[today.getMonth()] }} {{ today.getFullYear() }}</h1>
+    <div class="body" v-on:click="thisWeek">
       <div class="row" id="0">
         <span>{{ setDate(-6) }}</span>
-        <span>{{ setDate(-5) }}</span>
+        <span>{{ setDate(-5) }}<div id="tkrial">*</div></span>
         <span>{{ setDate(-4) }}</span>
         <span>{{ setDate(-3) }}</span>
         <span>{{ setDate(-2) }}</span>
@@ -73,33 +73,75 @@
 export default {
   data() {
     return {
-      today: this.$store.state.date
+      today: this.$store.state.date,
+      months: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ]
     }
   },
   computed: {
+
+    test(num) {
+      return num == 3;
+    },
+    // thisMonth(num) {
+    //   let daysOff = num - this.today.getDate();
+    //   let suDate = new Date();
+    //   suDate.setDate(this.today.getDate() + daysOff);
+    //   let first = new Date();
+    //   first.setDate(1);
+    //   let fixed = new Date();
+    //   fixed.setDate(suDate.getDate() - first.getDay());
+    //   return fixed.getMonth == this.today.getMonth();
+    // },
+    isToday() {
+      return false;
+    }
+  },
+  methods: {
     daysInMonth() {
       let suDate = new Date();
       suDate.setMonth(suDate.getMonth() + 1);
       suDate.setDate(0);
       return suDate.getDate();
     },
-    test() {
-      let suDate = new Date(this.today);
-      suDate.setDate(suDate.getDate + 1);
-      return suDate.getDate();
+    thisWeek() {
+      let dayIfFirst = this.today.getDate() % 7;
+      let row = 0;
+      if (this.today.getDay() >= dayIfFirst) {
+        row = Math.floor(this.today.getDate() / 7) + 2;
+      } else {
+        row = Math.floor(this.today.getDate() / 7) + 3;
+      }
+      let week = document.querySelector(".body div:nth-child("+ row +")");
+      week.classList.add("this-week");
     },
-    thisMonth(num) {
-      let daysOff = num - this.today.getDate();
-      let suDate = new Date();
-      suDate.setDate(this.today.getDate() + daysOff);
-      let first = new Date();
-      first.setDate(1);
-      let fixed = new Date();
-      fixed.setDate(suDate.getDate() - first.getDay());
-      return fixed.getMonth === this.today.getMonth();
-    }
-  },
-  methods: {
+    thisDay() {
+      let col = this.today.getDay() + 1
+      let day = document.querySelector(".this-week span:nth-child(" + col + ")");
+      day.classList.add("this-day")
+    },
+    thisMonth() {
+      let firstDate = new Date();
+      firstDate.setDate(1);
+      let first = firstDate.getDay();
+      let num = this.daysInMonth();
+      let spans = document.querySelectorAll(".row > span");
+      for (let i = 7 + first; i < num + 7 + first; i++) {
+        spans[i].classList.add("this-month");
+      }
+    },
     setDate(num) {
       let daysOff = num - this.today.getDate();
       let suDate = new Date();
@@ -136,11 +178,36 @@ span {
   height: 100%;
   text-align: center;
   border-style: solid;
-  border-width: 1px
+  border-width: 1px;
+  color: gray
 }
 
-this-month {
-  background-color: aquamarine !important;
+.this-month {
+  color: black;
+}
+
+#trial {
+  height: 20px;
+  width: 100%;
+  background-color: rgb(114, 198, 114);
+  text-align: left;
+  border-radius: 10px;
+}
+
+#month {
+  background-color: rgb(173, 173, 173);
+  margin: 0px;
+  height: 50px;
+  text-align: center;
+}
+
+.this-week {
+  height: 250%;
+}
+
+.this-day {
+  font-weight: bolder;
+  background-color: rgb(226, 252, 243);
 }
 
 </style>
