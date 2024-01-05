@@ -1,10 +1,10 @@
 <template>
-  <div class="pretty-calendar"  v-on:click="thisDay">
+  <div class="pretty-calendar"  v-on:click="highlightAll">
     <h1 id="month">{{ months[today.getMonth()] }} {{ today.getFullYear() }}</h1>
-    <div class="body" v-on:click="thisWeek">
+    <div class="body">
       <div class="row" id="0">
         <span>{{ setDate(-6) }}</span>
-        <span>{{ setDate(-5) }}<div id="tkrial">*</div></span>
+        <span>{{ setDate(-5) }}<div id="trial">*</div></span>
         <span>{{ setDate(-4) }}</span>
         <span>{{ setDate(-3) }}</span>
         <span>{{ setDate(-2) }}</span>
@@ -110,6 +110,11 @@ export default {
     }
   },
   methods: {
+    highlightAll() {
+      this.thisWeek();
+      this.thisDay();
+      this.thisMonth();
+    },
     daysInMonth() {
       let suDate = new Date();
       suDate.setMonth(suDate.getMonth() + 1);
@@ -137,7 +142,7 @@ export default {
       firstDate.setDate(1);
       let first = firstDate.getDay();
       let num = this.daysInMonth();
-      let spans = document.querySelectorAll(".row > span");
+      let spans = document.querySelectorAll("span");
       for (let i = 7 + first; i < num + 7 + first; i++) {
         spans[i].classList.add("this-month");
       }
@@ -158,11 +163,16 @@ export default {
 
 <style>
 
+.pretty-calendar {
+  height: 100%;
+}
+
 .body {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 500px;
+  height: fill;
+  padding-bottom: 50px;
 }
 
 .row {
@@ -173,17 +183,22 @@ export default {
 }
 
 span {
-  background-color: rgb(240, 252, 248);
+  background-color: rgb(249, 249, 249);
   width: 100%;
   height: 100%;
   text-align: center;
   border-style: solid;
   border-width: 1px;
-  color: gray
+  color: gray;
+  border-color: transparent;
 }
 
 .this-month {
-  color: black;
+  background-color: rgb(240, 252, 248);
+  color: black !important;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
 }
 
 #trial {

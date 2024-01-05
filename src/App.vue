@@ -17,10 +17,23 @@ export default {
 
 <style>
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+}
+
 .all {
   display: flex;
   flex-direction: row;
   width: 100%;
+  height: 100%;
 }
 
 #aside {
