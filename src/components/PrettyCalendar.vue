@@ -1,5 +1,5 @@
 <template>
-  <div class="pretty-calendar"  v-on:click="highlightAll">
+  <div class="pretty-calendar">
     <h1 id="month">{{ months[today.getMonth()] }} {{ today.getFullYear() }}</h1>
     <div class="body">
       <div class="row" id="0">
@@ -12,7 +12,11 @@
         <span>{{ setDate(0) }}</span>
       </div>
       <div class="row" id="1">
-        <span>{{ setDate(1) }}</span>
+        <span>{{ setDate(1) }}
+          <div v-for="arr in testNotes" v-bind:key="arr">
+            <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
+          </div>
+        </span>
         <span>{{ setDate(2) }}</span>
         <span>{{ setDate(3) }}</span>
         <span>{{ setDate(4) }}</span>
@@ -87,6 +91,10 @@ export default {
         "October",
         "November",
         "December"
+      ],
+      testNotes: [
+        [3, ["Here is a note for Jan 3"]],
+        [4, ["heres for the fourth", "here's another"]]
       ]
     }
   },
@@ -110,6 +118,11 @@ export default {
     }
   },
   methods: {
+    printNotes(arr) {
+      if (arr[0] === 3) {
+        return arr[1];
+      }
+    },
     highlightAll() {
       this.thisWeek();
       this.thisDay();
@@ -157,6 +170,9 @@ export default {
       fixed.setDate(suDate.getDate() - first.getDay());
       return fixed.getDate();
     }
+  },
+  mounted() {
+    this.highlightAll();
   }
 }
 </script>
