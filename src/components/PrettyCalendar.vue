@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" id="0">
         <span>{{ setDate(-6) }}</span>
-        <span>{{ setDate(-5) }}<div id="trial">*</div></span>
+        <span>{{ setDate(-5) }}</span>
         <span>{{ setDate(-4) }}</span>
         <span>{{ setDate(-3) }}</span>
         <span>{{ setDate(-2) }}</span>
@@ -18,9 +18,27 @@
           </div>
         </span>
         <span>{{ setDate(2) }}</span>
-        <span>{{ setDate(3) }}</span>
-        <span>{{ setDate(4) }}</span>
-        <span>{{ setDate(5) }}</span>
+        <span>{{ setDate(3) }}
+          <div v-for="arr in testNotes" v-bind:key="arr">
+            <div v-if="arr[0] === setDate(3)">
+              <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
+            </div>
+          </div>
+        </span>
+        <span>{{ setDate(4) }}
+          <div v-for="arr in testNotes" v-bind:key="arr">
+            <div v-if="arr[0] === setDate(4)">
+              <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
+            </div> 
+          </div>
+        </span>
+        <span>{{ setDate(5) }}
+          <div v-for="arr in testNotes" v-bind:key="arr">
+            <div v-for="item in arr[1]" v-bind:key="item">
+              <p v-if="arr[0] === setDate(5)">{{  }}</p>
+            </div> 
+          </div>
+        </span>
         <span>{{ setDate(6) }}</span>
         <span>{{ setDate(7) }}</span>
       </div>
@@ -118,6 +136,13 @@ export default {
     }
   },
   methods: {
+    accessSpan(col, row) {
+      return document.querySelector(".body > div:nth-child("+ col +") > span:nth-child("+ row +")");
+    },
+    addNoteTest() {
+
+    },
+    // VERY DUMB METHOD, DELETE SOON
     printNotes(arr) {
       if (arr[0] === 3) {
         return arr[1];
@@ -169,10 +194,18 @@ export default {
       let fixed = new Date();
       fixed.setDate(suDate.getDate() - first.getDay());
       return fixed.getDate();
-    }
+    }, 
+    // newSetDate() {
+    //   for(let i = 1; i <= 7; i++) {
+    //     for (let j = 1; j <= 7; j++) {
+    //       let span = this.accessSpan(i, j);
+    //     }
+    //   }
+    // }
   },
   mounted() {
     this.highlightAll();
+
   }
 }
 </script>
@@ -205,8 +238,8 @@ span {
   text-align: center;
   border-style: solid;
   border-width: 1px;
-  color: gray;
-  border-color: transparent;
+  color: rgb(169, 169, 169);
+  border-color: black;
 }
 
 .this-month {
