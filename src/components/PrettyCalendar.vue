@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon">*</div>
+          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note">*</div>
         </span>
       </div>
     </div>
@@ -15,7 +15,7 @@
 export default {
   data() {
     return {
-      notes: this.$store.state.allNotes,
+      map: this.$store.state.allNotes,
       today: this.$store.state.date,
       months: [
         "January",
@@ -31,11 +31,6 @@ export default {
         "November",
         "December"
       ],
-      testNotes: [
-        [1, 3, 2024, ["Here is a note for Jan 3"]],
-        [1, 8, 2024, ["heres for the fourth", "here's another"]]
-      ],
-      betterNotes: new Map(),
       spans: [
         [-6,-5,-4,-3,-2,-1,0],
         [1,2,3,4,5,6,7],
@@ -60,11 +55,11 @@ export default {
     // },
   },
   methods: {
-    accessSpan(col, row) {
-      return document.querySelector(".body > div:nth-child("+ col +") > span:nth-child("+ row +")");
-    },
-    addNoteTest() {
-
+    todaysNotes(date) {
+      if (this.map.has(date.toDateString())) {
+        return this.map.get(date.toDateString());
+      }
+      return [];
     },
     highlightAll() {
       this.thisWeek();
@@ -176,10 +171,15 @@ span {
   background-color: rgb(226, 252, 243);
 }
 .icon {
-  background-color: green;
+  background-color: rgb(0, 176, 0);
   height: 10px;
   border-radius: 5px;
   text-align: left;
+  margin: 2px;
+}
+
+.this-month .icon {
+  background-color: green;
 }
 
 </style>

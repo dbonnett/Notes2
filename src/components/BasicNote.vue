@@ -28,6 +28,19 @@
       updateTime() {
         this.$store.commit('UPDATE_TIME');
       }
+    },
+    computed: {
+      todaysNotes() {
+        if(this.map.has(this.date.toDateString())) {
+          return this.map.get(this.date.toDateString());
+        }
+        return [];
+      }
+    },
+    mounted() {
+      this.todaysNotes.forEach(element => {
+        this.notes.push(element);
+      });
     }
   }
 </script>
