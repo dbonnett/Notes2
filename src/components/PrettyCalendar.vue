@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note">*</div>
+          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note" v-on:click="preview(note)"></div>
         </span>
       </div>
     </div>
@@ -105,6 +105,9 @@ export default {
       let date = new Date();
       date.setDate(num - daysOff);
       return date;
+    },
+    preview(note) {
+      alert(note);
     }
   },
   mounted() {
