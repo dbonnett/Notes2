@@ -2,90 +2,10 @@
   <div class="pretty-calendar">
     <h1 id="month">{{ months[today.getMonth()] }} {{ today.getFullYear() }}</h1>
     <div class="body">
-      <div class="row" id="0">
-        <span>{{ setDate(-6) }}</span>
-        <span>{{ setDate(-5) }}</span>
-        <span>{{ setDate(-4) }}</span>
-        <span>{{ setDate(-3) }}</span>
-        <span>{{ setDate(-2) }}</span>
-        <span>{{ setDate(-1) }}</span>
-        <span>{{ setDate(0) }}</span>
-      </div>
-      <div class="row" id="1">
-        <span>{{ setDate(1) }}
-          <div v-for="arr in testNotes" v-bind:key="arr">
-            <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
-          </div>
+      <div class="row" v-for="arr in spans" v-bind:key="arr">
+        <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
+          <div class="icon">*</div>
         </span>
-        <span>{{ setDate(2) }}</span>
-        <span>{{ setDate(3) }}
-          <div v-for="arr in testNotes" v-bind:key="arr">
-            <div v-if="arr[0] === setDate(3)">
-              <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
-            </div>
-          </div>
-        </span>
-        <span>{{ setDate(4) }}
-          <div v-for="arr in testNotes" v-bind:key="arr">
-            <div v-if="arr[0] === setDate(4)">
-              <p v-for="item in printNotes(arr)" v-bind:key="item">{{ item }}</p>
-            </div> 
-          </div>
-        </span>
-        <span>{{ setDate(5) }}
-          <div v-for="arr in testNotes" v-bind:key="arr">
-            <div v-for="item in arr[1]" v-bind:key="item">
-              <p v-if="arr[0] === setDate(5)">{{  }}</p>
-            </div> 
-          </div>
-        </span>
-        <span>{{ setDate(6) }}</span>
-        <span>{{ setDate(7) }}</span>
-      </div>
-      <div class="row" id="2">
-        <span>{{ setDate(8) }}</span>
-        <span>{{ setDate(9) }}</span>
-        <span>{{ setDate(10) }}</span>
-        <span>{{ setDate(11) }}</span>
-        <span>{{ setDate(12) }}</span>
-        <span>{{ setDate(13) }}</span>
-        <span>{{ setDate(14) }}</span>
-      </div>
-      <div class="row" id="3">
-        <span>{{ setDate(15) }}</span>
-        <span>{{ setDate(16) }}</span>
-        <span>{{ setDate(17) }}</span>
-        <span>{{ setDate(18) }}</span>
-        <span>{{ setDate(19) }}</span>
-        <span>{{ setDate(20) }}</span>
-        <span>{{ setDate(21) }}</span>
-      </div>
-      <div class="row" id="4">
-        <span>{{ setDate(22) }}</span>
-        <span>{{ setDate(23) }}</span>
-        <span>{{ setDate(24) }}</span>
-        <span>{{ setDate(25) }}</span>
-        <span>{{ setDate(26) }}</span>
-        <span>{{ setDate(27) }}</span>
-        <span>{{ setDate(28) }}</span>
-      </div>
-      <div class="row" id="5">
-        <span>{{ setDate(29) }}</span>
-        <span>{{ setDate(30) }}</span>
-        <span>{{ setDate(31) }}</span>
-        <span>{{ setDate(32) }}</span>
-        <span>{{ setDate(33) }}</span>
-        <span>{{ setDate(34) }}</span>
-        <span>{{ setDate(35) }}</span>
-      </div>
-      <div class="row" id="6">
-        <span>{{ setDate(36) }}</span>
-        <span>{{ setDate(37) }}</span>
-        <span>{{ setDate(38) }}</span>
-        <span>{{ setDate(39) }}</span>
-        <span>{{ setDate(40) }}</span>
-        <span>{{ setDate(41) }}</span>
-        <span>{{ setDate(42) }}</span>
       </div>
     </div>
   </div>
@@ -95,6 +15,7 @@
 export default {
   data() {
     return {
+      notes: this.$store.state.allNotes,
       today: this.$store.state.date,
       months: [
         "January",
@@ -111,16 +32,22 @@ export default {
         "December"
       ],
       testNotes: [
-        [3, ["Here is a note for Jan 3"]],
-        [4, ["heres for the fourth", "here's another"]]
+        [1, 3, 2024, ["Here is a note for Jan 3"]],
+        [1, 8, 2024, ["heres for the fourth", "here's another"]]
+      ],
+      betterNotes: new Map(),
+      spans: [
+        [-6,-5,-4,-3,-2,-1,0],
+        [1,2,3,4,5,6,7],
+        [8,9,10,11,12,13,14],
+        [15,16,17,18,19,20,21],
+        [22,23,24,25,26,27,28],
+        [29,30,31,32,33,34,35],
+        [36,37,38,39,40,41,42]
       ]
     }
   },
   computed: {
-
-    test(num) {
-      return num == 3;
-    },
     // thisMonth(num) {
     //   let daysOff = num - this.today.getDate();
     //   let suDate = new Date();
@@ -131,9 +58,6 @@ export default {
     //   fixed.setDate(suDate.getDate() - first.getDay());
     //   return fixed.getMonth == this.today.getMonth();
     // },
-    isToday() {
-      return false;
-    }
   },
   methods: {
     accessSpan(col, row) {
@@ -141,12 +65,6 @@ export default {
     },
     addNoteTest() {
 
-    },
-    // VERY DUMB METHOD, DELETE SOON
-    printNotes(arr) {
-      if (arr[0] === 3) {
-        return arr[1];
-      }
     },
     highlightAll() {
       this.thisWeek();
@@ -193,19 +111,11 @@ export default {
       first.setDate(1);
       let fixed = new Date();
       fixed.setDate(suDate.getDate() - first.getDay());
-      return fixed.getDate();
-    }, 
-    // newSetDate() {
-    //   for(let i = 1; i <= 7; i++) {
-    //     for (let j = 1; j <= 7; j++) {
-    //       let span = this.accessSpan(i, j);
-    //     }
-    //   }
-    // }
+      return fixed;
+    }
   },
   mounted() {
     this.highlightAll();
-
   }
 }
 </script>
@@ -215,7 +125,6 @@ export default {
 .pretty-calendar {
   height: 100%;
 }
-
 .body {
   display: flex;
   flex-direction: column;
@@ -223,14 +132,12 @@ export default {
   height: fill;
   padding-bottom: 50px;
 }
-
 .row {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   height: 100%;
 }
-
 span {
   background-color: rgb(249, 249, 249);
   width: 100%;
@@ -241,7 +148,6 @@ span {
   color: rgb(169, 169, 169);
   border-color: black;
 }
-
 .this-month {
   background-color: rgb(240, 252, 248);
   color: black !important;
@@ -249,7 +155,6 @@ span {
   border-style: solid;
   border-width: 1px;
 }
-
 #trial {
   height: 20px;
   width: 100%;
@@ -257,21 +162,24 @@ span {
   text-align: left;
   border-radius: 10px;
 }
-
 #month {
   background-color: rgb(173, 173, 173);
   margin: 0px;
   height: 50px;
   text-align: center;
 }
-
 .this-week {
   height: 250%;
 }
-
 .this-day {
   font-weight: bolder;
   background-color: rgb(226, 252, 243);
+}
+.icon {
+  background-color: green;
+  height: 10px;
+  border-radius: 5px;
+  text-align: left;
 }
 
 </style>
