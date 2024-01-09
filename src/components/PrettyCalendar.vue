@@ -99,14 +99,12 @@ export default {
       }
     },
     setDate(num) {
-      let daysOff = num - this.today.getDate();
-      let suDate = new Date();
-      suDate.setDate(this.today.getDate() + daysOff);
       let first = new Date();
       first.setDate(1);
-      let fixed = new Date();
-      fixed.setDate(suDate.getDate() - first.getDay());
-      return fixed;
+      let daysOff = first.getDay();
+      let date = new Date();
+      date.setDate(num - daysOff);
+      return date;
     }
   },
   mounted() {
