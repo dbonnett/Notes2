@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note" v-on:click="preview(note)"></div>
+          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note" v-on:click="edit(note)"></div>
         </span>
       </div>
     </div>
@@ -106,8 +106,9 @@ export default {
       date.setDate(num - daysOff);
       return date;
     },
-    preview(note) {
-      alert(note);
+    edit(note) {
+      this.$store.state.currentText = note;
+      this.$router.push('/');
     }
   },
   mounted() {

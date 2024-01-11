@@ -5,8 +5,8 @@ import MainNote from '../views/MainNote.vue'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: MainCalendar
+    name: 'note',
+    component: MainNote
   },
   { 
     path: '/about',
@@ -17,9 +17,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   }, 
   {
-    path: '/note',
-    name: 'note',
-    component: MainNote
+    path: '/calendar',
+    name: 'calendar',
+    component: MainCalendar
   }
 ]
 

@@ -2,7 +2,9 @@
   <div class="basic-note">
     <h2>{{ $store.state.name }}</h2>
     <textarea name="note" id="note" cols="76" rows="50" v-model="typed"></textarea>
-    <div id="submit" v-on:click="enter"> Submit </div>
+    <router-link to="/calendar">
+      <div id="submit" v-on:click="enter"> Submit </div>
+    </router-link>
   </div>
 </template>
 
@@ -14,7 +16,8 @@
         date: this.$store.state.date,
         map: this.$store.state.allNotes,
         notes: [],
-        typed: "",
+        typed: this.$store.state.currentText,
+        editing: false,
       }
     },
     methods: {
@@ -22,8 +25,9 @@
         if(this.typed != "") {
           this.notes.push(this.typed)
           this.map.set(this.date.toDateString(), this.notes);
-          this.typed = "";
+          this.$store.state.currentText = "";
           this.$store.commit('UPDATE_NOTES', this.map);
+          
         }
       },
       updateTime() {
@@ -42,6 +46,9 @@
       this.todaysNotes.forEach(element => {
         this.notes.push(element);
       });
+      if (this.typed !== "") {
+        this.editing = true;
+      }
     }
   }
 </script>
