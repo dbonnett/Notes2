@@ -24,7 +24,7 @@
       enter() {
         if(this.typed != "") {
           this.notes.push(this.typed)
-          this.map.set(this.date.toDateString(), this.notes);
+          this.map.set(this.date.toISOString(), this.notes);
           this.$store.state.currentText = "";
           this.$store.commit('UPDATE_NOTES', this.map);
           

@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon" v-for="note in todaysNotes(setDate(num))" v-bind:key="note" v-on:click="edit(note)"></div>
+          <div class="icon" v-for="isodate in todaysNotes(setDate(num))" v-bind:key="isodate" v-on:click="edit(isodate)"></div>
         </span>
       </div>
     </div>
@@ -15,8 +15,8 @@
 export default {
   data() {
     return {
-      map: this.$store.state.allNotes,
       today: this.$store.state.date,
+      month: 0,
       months: [
         "January",
         "February",
@@ -42,22 +42,10 @@ export default {
       ]
     }
   },
-  computed: {
-    // thisMonth(num) {
-    //   let daysOff = num - this.today.getDate();
-    //   let suDate = new Date();
-    //   suDate.setDate(this.today.getDate() + daysOff);
-    //   let first = new Date();
-    //   first.setDate(1);
-    //   let fixed = new Date();
-    //   fixed.setDate(suDate.getDate() - first.getDay());
-    //   return fixed.getMonth == this.today.getMonth();
-    // },
-  },
   methods: {
     todaysNotes(date) {
-      if (this.map.has(date.toDateString())) {
-        return this.map.get(date.toDateString());
+      if (this.$store.state.notesByDay.has(date.toDateString())) {
+        return this.$store.state.notesByDay.get(date.toDateString());
       }
       return [];
     },
@@ -106,8 +94,8 @@ export default {
       date.setDate(num - daysOff);
       return date;
     },
-    edit(note) {
-      this.$store.state.currentText = note;
+    edit(isodate) {
+      this.$store.state.currentText = this.$store.state.allNotes.get(isodate).text;
       this.$router.push('/');
     }
   },
@@ -126,7 +114,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: fill;
+  height: stretch;
   padding-bottom: 50px;
 }
 .row {
