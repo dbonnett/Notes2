@@ -95,7 +95,7 @@ export default {
       return date;
     },
     edit(isodate) {
-      this.$store.state.currentText = this.$store.state.allNotes.get(isodate);
+      this.$store.commit('EDITING', isodate)
       this.$router.push('/');
     }
   },

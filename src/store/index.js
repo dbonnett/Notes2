@@ -28,6 +28,9 @@ export default createStore({
     //CALL WITH PERSISTED DATA ONCE PAGE MOUNTS
     UPDATE_NOTES(state, pairing) {
       state.allNotes.set(pairing[0], pairing[1]);
+    },
+    EDITING(state, payload) {
+      state.currentText = state.allNotes.get(payload).text;
     }
   },
   actions: {

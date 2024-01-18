@@ -1,7 +1,7 @@
 <template>
   <div class="redo-note">
     <h2>{{ $store.state.name }}</h2>
-    <textarea name="note" id="note" cols="76" rows="50" v-model="type"></textarea>
+    <textarea name="note" id="note" cols="76" rows="50" v-model="note.text"></textarea>
     <router-link to="/calendar">
       <div id="submit" v-on:click="enter"> Submit </div>
     </router-link>
@@ -22,8 +22,10 @@ export default {
   },
   methods: {
     enter() {
-      this.$store.commit('UPDATE_NOTES', [this.date.toISOString(), this.note]);
-      this.$store.commit('NOTES_BY_DAY', [this.date.toDateString(), this.date.toISOString()]);
+      if (!this.editing) {
+        this.$store.commit('UPDATE_NOTES', [this.date.toISOString(), this.note]);
+        this.$store.commit('NOTES_BY_DAY', [this.date.toDateString(), this.date.toISOString()]);
+      } 
     }
   },
   onMounted() {
