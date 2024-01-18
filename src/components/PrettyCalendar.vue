@@ -95,7 +95,7 @@ export default {
       return date;
     },
     edit(isodate) {
-      this.$store.state.currentText = this.$store.state.allNotes.get(isodate).text;
+      this.$store.state.currentText = this.$store.state.allNotes.get(isodate);
       this.$router.push('/');
     }
   },
