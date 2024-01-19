@@ -16,16 +16,21 @@ export default {
       note: {
         text: this.$store.state.currentText,
       },
-      typed: this.$store.state.currentText,
+      key: this.$store.state.editing.dateStr,
+      value: this.$store.state.editing.isoStr,
       editing: false,
     }
   },
   methods: {
     enter() {
       if (!this.editing) {
-        this.$store.commit('UPDATE_NOTES', [this.date.toISOString(), this.note]);
-        this.$store.commit('NOTES_BY_DAY', [this.date.toDateString(), this.date.toISOString()]);
-      } 
+        this.$store.commit('UPDATE_NOTES', { isoStr: this.date.toISOString(), noteObj: this.note});
+        this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString(), editing: false});
+      } else {
+        this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
+        this.$store.commit('NOTES_BY_DAY', { dateStr: this.key, isoStr: this.value, editing: true});
+      }
+      this.editing = false;
     }
   },
   onMounted() {

@@ -4,7 +4,7 @@
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon" v-for="isodate in todaysNotes(setDate(num))" v-bind:key="isodate" v-on:click="edit(isodate)"></div>
+          <div class="icon" v-for="isoStr in todaysNotes(setDate(num))" v-bind:key="isoStr" v-on:click="edit({isoStr: isoStr, dateStr: setDate(num).toDateString()})"></div>
         </span>
       </div>
     </div>
@@ -94,8 +94,8 @@ export default {
       date.setDate(num - daysOff);
       return date;
     },
-    edit(isodate) {
-      this.$store.commit('EDITING', isodate)
+    edit(payload) {
+      this.$store.commit('EDITING', payload);
       this.$router.push('/');
     }
   },
