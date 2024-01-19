@@ -5,6 +5,9 @@
     <router-link to="/calendar">
       <div id="submit" v-on:click="enter"> Submit </div>
     </router-link>
+    <router-link to="/calendar">
+      <div id="delete" v-on:click="dlt">DELETE</div> 
+    </router-link>
   </div>
 </template>
 
@@ -27,8 +30,20 @@ export default {
         this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString()});
       } else {
         this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
+        this.$store.commit('DONE_EDITING');
       }
-      this.$store.commit('DONE_EDITING');
+    },
+    dlt() {
+      if (!this.key) {
+        this.$store.commit('DELETE_MAIN', this.date.toISOString());
+      } else {
+        this.$store.commit('DELETE_MAIN', this.value);
+        this.$store.commit('DELETE_TODAYS', {key: this.key, value: this.value});
+        this.$store.commit('DONE_EDITING');
+      }
+    },
+    alrt() {
+      alert("Are you sure? ")
     }
   }
 }
@@ -38,7 +53,7 @@ export default {
   .basic-note {
     text-align: center;
   }
-  #submit {
+  #submit, #delete {
     font-weight: bold;
     background-color: gray;
     width: 80px;

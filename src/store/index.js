@@ -39,6 +39,20 @@ export default createStore({
       state.editing.currentText = "";
       state.editing.isoStr = "";
       state.editing.dateStr = "";
+    },
+    DELETE_MAIN(state, key) {
+      state.allNotes.delete(key);
+    },
+    DELETE_TODAYS(state, payload) {
+      if (!state.notesByDay.has(payload.key) && state.notesByDay.get(payload.key)!== undefined) {
+        return;
+      }
+      for (let i = 0; i < state.notesByDay.get(payload.key)[i].length; i++) {
+        if (state.notesByDay.get(payload.key)[i] === payload.value) {
+          state.notesByDay.get(payload.key).splice(i,1);
+          return;
+        }
+      }
     }
   },
   actions: {
