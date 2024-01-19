@@ -14,28 +14,21 @@ export default {
     return {
       date: new Date(),
       note: {
-        text: this.$store.state.currentText,
+        text: this.$store.state.editing.currentText,
       },
       key: this.$store.state.editing.dateStr,
       value: this.$store.state.editing.isoStr,
-      editing: false,
     }
   },
   methods: {
     enter() {
-      if (!this.editing) {
+      if (!this.key) {
         this.$store.commit('UPDATE_NOTES', { isoStr: this.date.toISOString(), noteObj: this.note});
-        this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString(), editing: false});
+        this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString()});
       } else {
         this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
-        this.$store.commit('NOTES_BY_DAY', { dateStr: this.key, isoStr: this.value, editing: true});
       }
-      this.editing = false;
-    }
-  },
-  onMounted() {
-    if (this.note.text !== "") {
-      this.editing = true;
+      this.$store.commit('DONE_EDITING');
     }
   }
 }

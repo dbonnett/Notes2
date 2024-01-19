@@ -20,15 +20,7 @@ export default createStore({
       state.searchMap.set(payload.attribute, payload.note);
     },
     NOTES_BY_DAY(state, payload) {
-      if (payload.editing && state.notesByDay.has(payload.dateStr)) {
-        state.notesByDay.get(payload.dateStr).push(payload.isoStr);
-      } else if (state.notesByDay.has(payload.dateStr)) {
-        for (let i = 0; i < state.notesByDay.get(payload.dateStr).length; i++) {
-          if (state.notesByDay.get(payload.dateStr)[i] === payload.isoStr) {
-            state.notesByDay.get(payload.dateStr).splice(i);
-            break;
-          }
-        }
+      if (state.notesByDay.has(payload.dateStr)) {
         state.notesByDay.get(payload.dateStr).push(payload.isoStr);
       } else {
         state.notesByDay.set(payload.dateStr, [payload.isoStr]);
@@ -42,6 +34,11 @@ export default createStore({
       state.editing.currentText = state.allNotes.get(payload.isoStr).text;
       state.editing.isoStr = payload.isoStr;
       state.editing.dateStr = payload.dateStr;
+    },
+    DONE_EDITING(state) {
+      state.editing.currentText = "";
+      state.editing.isoStr = "";
+      state.editing.dateStr = "";
     }
   },
   actions: {
