@@ -74,6 +74,10 @@ export default {
         spansArr[i].classList.remove('this-month');
         spansArr[i].classList.remove('this-day');
       }
+      let rows = document.querySelectorAll('.row');
+      for (let i = 0; i < rows.length; i++) {
+        rows[i].classList.remove('this-week');
+      }
       if (this.monthsOffset === 0) {
         this.thisWeek();
         this.thisDay();
