@@ -1,7 +1,9 @@
 <template>
   <div class="pretty-calendar">
-    <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }} {{ daysAdded() }}</h1>
-    <div class="change-month" v-on:click="monthsOffset--">^</div>
+    <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }}</h1>
+    <div v-on:click="highlightAll()">
+      <div class="change-month" v-on:click="monthsOffset--">^</div>
+    </div>
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
         <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded()).getDate() }}
@@ -9,7 +11,9 @@
         </span>
       </div>
     </div>
-    <div class="change-month" v-on:click="monthsOffset++">v</div>
+    <div v-on:click="highlightAll()">
+      <div class="change-month" v-on:click="monthsOffset++">v</div>
+    </div>
   </div>
 </template>
 
@@ -18,7 +22,7 @@ export default {
   data() {
     return {
       today: this.$store.state.date,
-      monthsOffset: -1,
+      monthsOffset: 0,
       months: [
         "January",
         "February",
@@ -55,7 +59,7 @@ export default {
       // ahead.setDate(1);
       // if (this.monthsOffset > 0) {
       //   return (ahead - first) / 1000 / 60 / 60 / 24;
-      // }
+      // }  
       return this.monthsOffset * 28;
     },
     todaysNotes(date) {
@@ -65,6 +69,11 @@ export default {
       return [];
     },
     highlightAll() {
+      let spansArr = document.querySelectorAll('span');
+      for (let i = 0; i < spansArr.length; i++) {
+        spansArr[i].classList.remove('this-month');
+        spansArr[i].classList.remove('this-day');
+      }
       if (this.monthsOffset === 0) {
         this.thisWeek();
         this.thisDay();
@@ -72,12 +81,15 @@ export default {
       this.thisMonth();
     },
     daysInMonth() {
-      let suDate = new Date();
+      let suDate = this.whichMonth;
       suDate.setMonth(suDate.getMonth() + 1);
       suDate.setDate(0);
       return suDate.getDate();
     },
     thisWeek() {
+      if (this.monthsOffset !== 0) {
+        return; 
+      }
       let dayIfFirst = this.today.getDate() % 7;
       let row = 0;
       if (this.today.getDay() >= dayIfFirst) {
@@ -94,7 +106,7 @@ export default {
       day.classList.add("this-day")
     },
     thisMonth() {
-      let firstDate = new Date();
+      let firstDate = this.whichMonth;
       firstDate.setDate(1);
       let first = firstDate.getDay();
       let num = this.daysInMonth();
