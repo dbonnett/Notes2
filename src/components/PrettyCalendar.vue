@@ -1,13 +1,15 @@
 <template>
   <div class="pretty-calendar">
-    <h1 id="month">{{ months[today.getMonth()] }} {{ today.getFullYear() }}</h1>
+    <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }} {{ daysAdded() }}</h1>
+    <div class="change-month" v-on:click="monthsOffset--">^</div>
     <div class="body">
       <div class="row" v-for="arr in spans" v-bind:key="arr">
-        <span v-for="num in arr" v-bind:key="num">{{ setDate(num).getDate() }}
-          <div class="icon" v-for="iso in todaysNotes(setDate(num))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num).toDateString()})"></div>
+        <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded()).getDate() }}
+          <div class="icon" v-for="iso in todaysNotes(setDate(num + daysAdded()))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
         </span>
       </div>
     </div>
+    <div class="change-month" v-on:click="monthsOffset++">v</div>
   </div>
 </template>
 
@@ -16,7 +18,7 @@ export default {
   data() {
     return {
       today: this.$store.state.date,
-      month: 0,
+      monthsOffset: -1,
       months: [
         "January",
         "February",
@@ -43,6 +45,19 @@ export default {
     }
   },
   methods: {
+    daysAdded() {
+      // let total = 0;
+      // let first = new Date();
+      // first.setDate(1);
+      // let ahead = new Date();
+      // let mon = this.today.getMonth() + this.monthsOffset;
+      // ahead.setMonth(mon);
+      // ahead.setDate(1);
+      // if (this.monthsOffset > 0) {
+      //   return (ahead - first) / 1000 / 60 / 60 / 24;
+      // }
+      return this.monthsOffset * 28;
+    },
     todaysNotes(date) {
       if (this.$store.state.notesByDay.has(date.toDateString())) {
         return this.$store.state.notesByDay.get(date.toDateString());
@@ -50,8 +65,10 @@ export default {
       return [];
     },
     highlightAll() {
-      this.thisWeek();
-      this.thisDay();
+      if (this.monthsOffset === 0) {
+        this.thisWeek();
+        this.thisDay();
+      }
       this.thisMonth();
     },
     daysInMonth() {
@@ -101,6 +118,13 @@ export default {
   },
   mounted() {
     this.highlightAll();
+  },
+  computed: {
+    whichMonth() {
+      let date = new Date();
+      date.setMonth(this.today.getMonth() + this.monthsOffset)
+      return date;
+    }
   }
 }
 </script>
@@ -170,6 +194,10 @@ span {
 
 .this-month .icon {
   background-color: green;
+}
+
+.change-month {
+  font-size: 30;
 }
 
 </style>

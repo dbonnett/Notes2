@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style>
-  .basic-note {
+  .redo-note {
     text-align: center;
   }
   #submit, #delete {
