@@ -63,6 +63,17 @@ export default {
           total += 7;
         } 
       }
+      for (let i = -1; i >= this.monthsOffset; i--) {
+        total -= 28;
+        first = new Date();
+        first.setMonth(this.today.getMonth() + i);
+        first.setDate(1);
+        let add2 = first.getDay();
+        let add1 = this.daysInMonth(first);
+        if (add1 + add2 >= 35) {
+          total -= 7;
+        } 
+      }
       return total;
     },
     todaysNotes(date) {
