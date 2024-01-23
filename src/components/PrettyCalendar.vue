@@ -51,18 +51,17 @@ export default {
   methods: {
     daysAdded() {
       let total = 0;
-      let last = 0;
-      // let first = new Date();
-      // first = this.today;
+      let first;
       for (let i = 1; i <= this.monthsOffset; i++) {
-        total += 28 + last;
-        // first.setMonth(this.today.getMonth() + this.monthsOffset);
-        // first.setDate(1)
-        // if (this.daysInMonth(first) + first.getDay() > 35) {
-        //   last = 7;
-        // } else {
-        //   last = 0;
-        // }
+        total += 28;
+        first = new Date();
+        first.setMonth(this.today.getMonth() + i - 1);
+        first.setDate(1);
+        let add2 = first.getDay();
+        let add1 = this.daysInMonth(first);
+        if (add1 + add2 >= 35) {
+          total += 7;
+        } 
       }
       return total;
     },
