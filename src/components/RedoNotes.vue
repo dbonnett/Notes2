@@ -1,6 +1,6 @@
 <template>
   <div class="redo-note">
-    <h2>{{ $store.state.name }}</h2>
+    <h2>{{ date.toDateString() }}</h2>
     <textarea name="note" id="note" cols="76" rows="50" v-model="note.text"></textarea>
     <router-link to="/calendar">
       <div id="submit" v-on:click="enter"> Submit </div>

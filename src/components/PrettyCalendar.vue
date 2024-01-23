@@ -50,17 +50,21 @@ export default {
   },
   methods: {
     daysAdded() {
-      // let total = 0;
+      let total = 0;
+      let last = 0;
       // let first = new Date();
-      // first.setDate(1);
-      // let ahead = new Date();
-      // let mon = this.today.getMonth() + this.monthsOffset;
-      // ahead.setMonth(mon);
-      // ahead.setDate(1);
-      // if (this.monthsOffset > 0) {
-      //   return (ahead - first) / 1000 / 60 / 60 / 24;
-      // }  
-      return this.monthsOffset * 28;
+      // first = this.today;
+      for (let i = 1; i <= this.monthsOffset; i++) {
+        total += 28 + last;
+        // first.setMonth(this.today.getMonth() + this.monthsOffset);
+        // first.setDate(1)
+        // if (this.daysInMonth(first) + first.getDay() > 35) {
+        //   last = 7;
+        // } else {
+        //   last = 0;
+        // }
+      }
+      return total;
     },
     todaysNotes(date) {
       if (this.$store.state.notesByDay.has(date.toDateString())) {
@@ -84,8 +88,8 @@ export default {
       }
       this.thisMonth();
     },
-    daysInMonth() {
-      let suDate = this.whichMonth;
+    daysInMonth(date) {
+      let suDate = date;
       suDate.setMonth(suDate.getMonth() + 1);
       suDate.setDate(0);
       return suDate.getDate();
@@ -113,7 +117,7 @@ export default {
       let firstDate = this.whichMonth;
       firstDate.setDate(1);
       let first = firstDate.getDay();
-      let num = this.daysInMonth();
+      let num = this.daysInMonth(this.whichMonth);
       let spans = document.querySelectorAll("span");
       for (let i = 7 + first; i < num + 7 + first; i++) {
         spans[i].classList.add("this-month");
