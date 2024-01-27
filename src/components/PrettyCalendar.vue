@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       today: this.$store.state.date,
-      monthsOffset: 0,
+      monthsOffset: this.$store.state.monthsOffset,
       months: [
         "January",
         "February",

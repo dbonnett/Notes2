@@ -4,6 +4,7 @@ export default createStore({
   state: {
     name: "FlexiNote",
     date: new Date(),
+    monthsOffset: 0,
     editing: {
       currentText: "",
       isoStr: "",
