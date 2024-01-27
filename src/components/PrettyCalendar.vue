@@ -171,8 +171,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: stretch;
-  padding-bottom: 50px;
+  height: 92%;
 }
 .row {
   display: flex;
@@ -236,6 +235,14 @@ span {
 .yearly {
   height: 100%;
   margin: 10px;
+}
+
+.yearly span {
+  font-size: 0;
+}
+
+.yearly .body {
+  height: 70% !important;
 }
 
 </style>
