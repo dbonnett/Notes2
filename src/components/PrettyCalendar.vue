@@ -234,9 +234,8 @@ span {
 }
 
 .yearly {
-  height: 30% !important;
-  width: 20%;
-  font-size: 0;
+  height: 100%;
+  margin: 10px;
 }
 
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="main-calendar">
-  <pretty-calendar v-bind:class="{'yearly': !monthView}"></pretty-calendar>
+  <div class="month-container" v-bind:class="{'grid': !monthView}">
+    <pretty-calendar v-for="months in numberOfMonths" v-bind:key="months"></pretty-calendar>
+  </div>
   <router-link id="note-router" v-bind:to="{name: 'note'}">
     <div v-on:click="clearData">Make a note</div>
   </router-link>
@@ -28,6 +30,10 @@ export default {
   computed: {
     monthView() {
       return this.$store.state.monthView
+    },
+    numberOfMonths() {
+      if (this.monthView) {return 1;}
+      return 12;
     }
   }
 }
@@ -39,14 +45,13 @@ pretty-calendar {
   height: 100%;
 }
 
-.yearly {
-  height: 30% !important;
-  width: 20%;
-  font-size: 0;
+.month-container {
+  height: 100%;
 }
 
-h1 {
-  font-size: 10;
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 </style>
