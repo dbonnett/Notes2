@@ -1,5 +1,5 @@
 <template>
-  <div class="pretty-calendar">
+  <div class="pretty-calendar"  v-bind:class="{'yearly': !monthView}">
     <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }}</h1>
     <div v-on:click="highlightAll()">
       <div class="change-month" v-on:click="monthsOffset--">^</div>
@@ -154,6 +154,9 @@ export default {
       let date = new Date();
       date.setMonth(this.today.getMonth() + this.monthsOffset)
       return date;
+    },
+    monthView() {
+      return this.$store.state.monthView;
     }
   }
 }
@@ -228,6 +231,12 @@ span {
 
 .change-month {
   font-size: 30;
+}
+
+.yearly {
+  height: 30% !important;
+  width: 20%;
+  font-size: 0;
 }
 
 </style>

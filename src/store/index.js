@@ -5,6 +5,7 @@ export default createStore({
     name: "FlexiNote",
     date: new Date(),
     monthsOffset: 0,
+    monthView: true,
     editing: {
       currentText: "",
       isoStr: "",
@@ -54,6 +55,9 @@ export default createStore({
           return;
         }
       }
+    },
+    CHANGE_VIEW(state) {
+      state.monthView = !state.monthView;
     }
   },
   actions: {

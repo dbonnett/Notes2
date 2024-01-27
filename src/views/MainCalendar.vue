@@ -1,7 +1,6 @@
 <template>
   <div class="main-calendar">
-  <pretty-calendar v-show="monthView"></pretty-calendar>
-  <mini-calendar v-show="!monthView"></mini-calendar>
+  <pretty-calendar v-bind:class="{'yearly': !monthView}"></pretty-calendar>
   <router-link id="note-router" v-bind:to="{name: 'note'}">
     <div v-on:click="clearData">Make a note</div>
   </router-link>
@@ -11,12 +10,11 @@
 
 <script>
 import PrettyCalendar from '../components/PrettyCalendar.vue'
-import MiniCalendar from '@/components/MiniCalendar.vue';
 export default {
-  components: { PrettyCalendar, MiniCalendar },
+  components: { PrettyCalendar },
   data() {
     return {
-      monthView: true
+      
     }
   },
   methods: {
@@ -24,7 +22,12 @@ export default {
       this.$store.commit('DONE_EDITING');
     },
     toggle() {
-      this.monthView = !this.monthView;
+      this.$store.commit('CHANGE_VIEW');
+    }
+  },
+  computed: {
+    monthView() {
+      return this.$store.state.monthView
     }
   }
 }
@@ -34,6 +37,16 @@ export default {
 
 pretty-calendar {
   height: 100%;
+}
+
+.yearly {
+  height: 30% !important;
+  width: 20%;
+  font-size: 0;
+}
+
+h1 {
+  font-size: 10;
 }
 
 </style>
