@@ -58,6 +58,9 @@ export default createStore({
     },
     CHANGE_VIEW(state) {
       state.monthView = !state.monthView;
+    }, 
+    OFFSET_MONTHS(state, num) {
+      state.monthsOffset = num;
     }
   },
   actions: {

@@ -32,8 +32,14 @@ export default {
       return this.$store.state.monthView
     },
     numberOfMonths() {
-      if (this.monthView) {return 1;}
-      return 12;
+      let arr = [];
+      if (this.monthView) {
+        return arr.push(0);
+      }
+      for (let i = 0; i <= 11; i++) {
+        arr.push(i - this.$store.state.date.getMonth());
+      }
+      return arr;
     }
   }
 }
