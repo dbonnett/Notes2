@@ -1,8 +1,6 @@
 <template>
   <div class="main-calendar">
-  <div class="month-container" v-bind:class="{'grid': !monthView}">
-    <pretty-calendar v-for="months in numberOfMonths" v-bind:key="months"></pretty-calendar>
-  </div>
+  <pretty-calendar></pretty-calendar>
   <router-link id="note-router" v-bind:to="{name: 'note'}">
     <div v-on:click="clearData">Make a note</div>
   </router-link>
@@ -39,6 +37,7 @@ export default {
       for (let i = 0; i <= 11; i++) {
         arr.push(i - this.$store.state.date.getMonth());
       }
+      this.$store.commit('SET_MONTH_NUMBERS', arr);
       return arr;
     }
   }

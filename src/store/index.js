@@ -11,6 +11,7 @@ export default createStore({
       isoStr: "",
       dateStr: "",
     },
+    monthNumbers: [0],
     allNotes: new Map(),
     notesByDay: new Map(),
     searchMap: new Map()
@@ -61,6 +62,9 @@ export default createStore({
     }, 
     OFFSET_MONTHS(state, num) {
       state.monthsOffset = num;
+    },
+    SET_MONTH_NUMBERS(state, arr) {
+      state.monthNumbers = arr;
     }
   },
   actions: {

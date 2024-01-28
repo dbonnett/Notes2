@@ -1,14 +1,18 @@
 <template>
-  <div class="pretty-calendar"  v-bind:class="{'yearly': !monthView}">
-    <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }}</h1>
+  <div class="pretty-calendar">
     <div v-on:click="highlightAll()">
       <div class="change-month" v-on:click="monthsOffset--">^</div>
     </div>
-    <div class="body">
-      <div class="row" v-for="arr in spans" v-bind:key="arr">
-        <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded()).getDate() }}
-          <div class="icon" v-for="iso in todaysNotes(setDate(num + daysAdded()))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
-        </span>
+    <div class="month-container" v-bind:class="{'yearly': !monthView}" v-for="month in numberOfMonths" v-bind:key="month">
+      <div class="bundler">
+      <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }}</h1>
+      <div class="body">
+        <div class="row" v-for="arr in spans" v-bind:key="arr">
+          <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded()).getDate() }}
+            <div class="icon" v-for="iso in todaysNotes(setDate(num + daysAdded()))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
+          </span>
+        </div>
+      </div>
       </div>
     </div>
     <div v-on:click="highlightAll()">
@@ -49,6 +53,9 @@ export default {
     }
   },
   methods: {
+    setMonth(num) {
+      return num - this.monthsOffset;
+    },
     daysAdded() {
       let total = 0;
       let first;
@@ -157,6 +164,17 @@ export default {
     },
     monthView() {
       return this.$store.state.monthView;
+    },
+    numberOfMonths() {
+      let arr = [];
+      if (this.monthView) {
+        return arr.push(0);
+      }
+      for (let i = 0; i <= 11; i++) {
+        arr.push(i - this.$store.state.date.getMonth());
+      }
+      this.$store.commit('SET_MONTH_NUMBERS', arr);
+      return arr;
     }
   }
 }
@@ -233,6 +251,8 @@ span {
 }
 
 .yearly {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   height: 100%;
   margin: 10px;
 }
@@ -243,6 +263,14 @@ span {
 
 .yearly .body {
   height: 70% !important;
+}
+
+.month-container {
+  height: 100%;
+}
+
+.bundler {
+  height: 100%;
 }
 
 </style>
