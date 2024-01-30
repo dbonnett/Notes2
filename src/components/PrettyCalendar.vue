@@ -3,7 +3,8 @@
     <div v-on:click="highlightAll()">
       <div class="change-month" v-on:click="monthsOffset--">^</div>
     </div>
-    <div class="month-container" v-bind:class="{'yearly': !monthView}" v-for="month in numberOfMonths" v-bind:key="month">
+    <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
+    <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
       <div class="bundler">
       <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ whichMonth(month).getFullYear() }}</h1>
       <div class="body">
@@ -14,6 +15,7 @@
         </div>
       </div>
       </div>
+    </div>
     </div>
     <div style="margin-top:25px" v-on:click="highlightAll()">
       <div class="change-month" v-on:click="monthsOffset++">v</div>
@@ -257,6 +259,7 @@ span {
   grid-template-columns: 1fr 1fr 1fr 1fr;
   height: 100%;
   margin: 10px;
+  gap: 10px;
 }
 
 .yearly span {
@@ -273,6 +276,10 @@ span {
 
 .bundler {
   height: 100%;
+}
+
+.outer-shell {
+  height: 94%;
 }
 
 </style>
