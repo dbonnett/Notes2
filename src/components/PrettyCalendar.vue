@@ -15,7 +15,7 @@
       </div>
       </div>
     </div>
-    <div v-on:click="highlightAll()">
+    <div style="margin-top:25px" v-on:click="highlightAll()">
       <div class="change-month" v-on:click="monthsOffset++">v</div>
     </div>
   </div>
