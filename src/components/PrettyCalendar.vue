@@ -5,7 +5,7 @@
     </div>
     <div class="month-container" v-bind:class="{'yearly': !monthView}" v-for="month in numberOfMonths" v-bind:key="month">
       <div class="bundler">
-      <h1 id="month">{{ months[whichMonth.getMonth()] }} {{ whichMonth.getFullYear() }}</h1>
+      <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ whichMonth(month).getFullYear() }}</h1>
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
           <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded()).getDate() }}
@@ -62,8 +62,8 @@ export default {
       for (let i = 1; i <= this.monthsOffset; i++) {
         total += 28;
         first = new Date();
-        first.setMonth(this.today.getMonth() + i - 1);
         first.setDate(1);
+        first.setMonth(this.today.getMonth() + i - 1);
         let add2 = first.getDay();
         let add1 = this.daysInMonth(first);
         if (add1 + add2 >= 35) {
@@ -73,8 +73,8 @@ export default {
       for (let i = -1; i >= this.monthsOffset; i--) {
         total -= 28;
         first = new Date();
-        first.setMonth(this.today.getMonth() + i);
         first.setDate(1);
+        first.setMonth(this.today.getMonth() + i);
         let add2 = first.getDay();
         let add1 = this.daysInMonth(first);
         if (add1 + add2 >= 35) {
@@ -103,7 +103,7 @@ export default {
         this.thisWeek();
         this.thisDay();
       }
-      this.thisMonth();
+      //this.thisMonth();
     },
     daysInMonth(date) {
       let suDate = date;
@@ -131,10 +131,10 @@ export default {
       day.classList.add("this-day")
     },
     thisMonth() {
-      let firstDate = this.whichMonth;
+      let firstDate = this.whichMonth();
       firstDate.setDate(1);
       let first = firstDate.getDay();
-      let num = this.daysInMonth(this.whichMonth);
+      let num = this.daysInMonth(this.whichMonth());
       let spans = document.querySelectorAll("span");
       for (let i = 7 + first; i < num + 7 + first; i++) {
         spans[i].classList.add("this-month");
@@ -151,27 +151,29 @@ export default {
     edit(payload) {
       this.$store.commit('EDITING', payload);
       this.$router.push('/');
-    }
+    },
+    whichMonth(offset) {
+      let date = new Date();
+      date.setDate(1);
+      date.setMonth(this.today.getMonth() + offset)
+      return date;
+    },
   },
   mounted() {
     this.highlightAll();
   },
   computed: {
-    whichMonth() {
-      let date = new Date();
-      date.setMonth(this.today.getMonth() + this.monthsOffset)
-      return date;
-    },
     monthView() {
       return this.$store.state.monthView;
     },
     numberOfMonths() {
       let arr = [];
       if (this.monthView) {
-        return arr.push(0);
-      }
-      for (let i = 0; i <= 11; i++) {
-        arr.push(i - this.$store.state.date.getMonth());
+        arr.push(this.monthsOffset);
+      } else {
+        for (let i = 0; i <= 11; i++) {
+          arr.push(i - this.$store.state.date.getMonth());
+        }
       }
       this.$store.commit('SET_MONTH_NUMBERS', arr);
       return arr;
