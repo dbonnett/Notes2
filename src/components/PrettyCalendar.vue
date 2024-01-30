@@ -1,12 +1,12 @@
 <template>
   <div class="pretty-calendar">
-    <div v-on:click="highlightAll()">
-      <div class="change-month" v-on:click="monthsOffset--">^</div>
+    <div>
+      <div class="change-month" v-on:click=this.changeMonth(-1)>^</div>
     </div>
     <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
     <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
       <div class="bundler">
-      <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ whichMonth(month).getFullYear() }}</h1>
+      <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</h1>
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
           <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
@@ -17,8 +17,8 @@
       </div>
     </div>
     </div>
-    <div style="margin-top:25px" v-on:click="highlightAll()">
-      <div class="change-month" v-on:click="monthsOffset++">v</div>
+    <div style="margin-top:15px">
+      <div class="change-month" v-on:click=this.changeMonth(1)>v</div>
     </div>
   </div>
 </template>
@@ -27,8 +27,8 @@
 export default {
   data() {
     return {
+      monthsOffset: 0,
       today: this.$store.state.date,
-      monthsOffset: this.$store.state.monthsOffset,
       months: [
         "January",
         "February",
@@ -55,8 +55,20 @@ export default {
     }
   },
   methods: {
+    changeMonth(inc) {
+      this.monthsOffset += inc;
+      setTimeout( () => {
+        console.log("timed Out")
+        this.highlightAll(this.monthsOffset)
+      }, 0)
+    },
     setMonth(num) {
       return num - this.monthsOffset;
+    },
+    conditionalYear(num) {
+      if (this.monthView) {
+        return this.whichMonth(num).getFullYear();
+      }
     },
     daysAdded(offset) {
       let total = 0;
@@ -91,7 +103,7 @@ export default {
       }
       return [];
     },
-    highlightAll() {
+    highlightAll(offset = 0) {
       let spansArr = document.querySelectorAll('span');
       for (let i = 0; i < spansArr.length; i++) {
         spansArr[i].classList.remove('this-month');
@@ -105,7 +117,7 @@ export default {
         this.thisWeek();
         this.thisDay();
       }
-      //this.thisMonth();
+      this.thisMonth(offset);
     },
     daysInMonth(date) {
       let suDate = date;
@@ -132,11 +144,11 @@ export default {
       let day = document.querySelector(".this-week span:nth-child(" + col + ")");
       day.classList.add("this-day")
     },
-    thisMonth() {
-      let firstDate = this.whichMonth();
+    thisMonth(offset) {
+      let firstDate = this.whichMonth(offset);
       firstDate.setDate(1);
       let first = firstDate.getDay();
-      let num = this.daysInMonth(this.whichMonth());
+      let num = this.daysInMonth(this.whichMonth(offset));
       let spans = document.querySelectorAll("span");
       for (let i = 7 + first; i < num + 7 + first; i++) {
         spans[i].classList.add("this-month");
