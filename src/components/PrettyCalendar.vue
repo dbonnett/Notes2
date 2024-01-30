@@ -17,7 +17,7 @@
       </div>
     </div>
     </div>
-    <div style="margin-top:15px">
+    <div style="margin-top:5px">
       <div class="change-month" v-on:click=this.changeMonth(1)>v</div>
     </div>
   </div>
@@ -56,9 +56,12 @@ export default {
   },
   methods: {
     changeMonth(inc) {
-      this.monthsOffset += inc;
+      if (this.monthView) {
+        this.monthsOffset += inc;
+      } else {
+        this.monthsOffset += (12 * inc);
+      }
       setTimeout( () => {
-        console.log("timed Out")
         this.highlightAll(this.monthsOffset)
       }, 0)
     },
@@ -263,7 +266,8 @@ span {
 }
 
 .change-month {
-  font-size: 30;
+  size: 30;
+  color: red;
 }
 
 .yearly {
