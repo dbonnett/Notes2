@@ -1,11 +1,12 @@
 <template>
   <div class="pretty-calendar">
+    <h1 style="text-align: center;">{{ yearlyViewYear() }}</h1>
     <div>
       <div class="change-month" v-on:click=this.changeMonth(-1)>^</div>
     </div>
     <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
     <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
-      <div class="bundler">
+      <div class="bundler" v-on:click="goToMonth(month)">
       <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</h1>
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
@@ -65,13 +66,27 @@ export default {
         this.highlightAll(this.monthsOffset)
       }, 0)
     },
+    goToMonth(mon) {
+      if (!this.monthView) {
+        this.monthsOffset = mon;
+        this.$store.commit('CHANGE_VIEW');
+      }
+    },
     setMonth(num) {
       return num - this.monthsOffset;
     },
     conditionalYear(num) {
       if (this.monthView) {
         return this.whichMonth(num).getFullYear();
-      }
+      } 
+    },
+    yearlyViewYear() {
+        if (!this.monthView){
+          let date = new Date();
+          date.setDate(1);
+          date.setMonth(date.getMonth() + this.monthsOffset);
+          return date.getFullYear();
+        }
     },
     daysAdded(offset) {
       let total = 0;
@@ -191,6 +206,9 @@ export default {
         for (let i = 0; i <= 11; i++) {
           arr.push(i - this.$store.state.date.getMonth());
         }
+        arr.map((num) => {
+          return num + (12 * this.yearlyViewYear() - this.today.getFullYear());
+        })
       }
       this.$store.commit('SET_MONTH_NUMBERS', arr);
       return arr;
