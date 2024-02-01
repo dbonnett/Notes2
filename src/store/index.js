@@ -11,6 +11,12 @@ export default createStore({
       isoStr: "",
       dateStr: "",
     },
+    currentCategories: {
+      brainstorm: false,
+      list: false,
+      reminder: false,
+      goal: false,
+    },
     monthNumbers: [0],
     allNotes: new Map(),
     notesByDay: new Map(),

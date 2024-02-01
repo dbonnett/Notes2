@@ -187,7 +187,7 @@ export default {
     whichMonth(offset) {
       let date = new Date();
       date.setDate(1);
-      date.setMonth(this.today.getMonth() + offset)
+      date.setMonth(this.today.getMonth() + offset);
       return date;
     },
   },

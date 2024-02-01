@@ -9,7 +9,7 @@
 // import AllAttributesNote from '@/components/AllAttributesNote.vue'
 import RedoNotes from '@/components/RedoNotes.vue';
 export default {
-  components: { RedoNotes  },
+  components: { RedoNotes },
 }
 </script>
 
