@@ -34,15 +34,6 @@ export default {
       } else {
         selectAllLabel.innerHTML = "SELECT ALL"
       }
-    },
-    isSelected() {
-      let checkbox = document.querySelectorAll('#select-all');
-      if (checkbox.hasAttribute('checked')) {
-        checkbox.innerHtml = "UNSELECT ALL";
-      }
-      else { 
-        checkbox.innerHtml = "SELECT ALL";
-      }
     }
   }, 
   computed: {

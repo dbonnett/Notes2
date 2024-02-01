@@ -18,10 +18,12 @@ export default {
       date: new Date(),
       note: {
         text: this.$store.state.editing.currentText,
-        categories: [
-          "Brainstorming",
-          "Hypothesis"
-        ]
+        categories: {
+          brainstorm: false,
+          list: false,
+          reminder: false,
+          goal: false,
+        }
       },
       key: this.$store.state.editing.dateStr,
       value: this.$store.state.editing.isoStr,
@@ -36,6 +38,7 @@ export default {
         this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
         this.$store.commit('DONE_EDITING');
       }
+      this.note.categories = this.$store.state.currentCategories;
       this.$router.push({ path: '/calendar' });
     },
     dlt() {

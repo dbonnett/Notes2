@@ -71,6 +71,9 @@ export default createStore({
     },
     SET_MONTH_NUMBERS(state, arr) {
       state.monthNumbers = arr;
+    },
+    UPDATE_CATEGORIES(state, cat) {
+      state.currentCategories = cat;
     }
   },
   actions: {
