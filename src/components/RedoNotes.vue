@@ -1,7 +1,7 @@
 <template>
-  <div class="redo-note">
+  <div class="redo-note" @keypress.ctrl.d.prevent="dlt()">
     <h2>{{ date.toDateString() }}</h2>
-    <textarea name="note" id="note" cols="76" rows="50" v-model="note.text" v-on:keypress.meta.enter.prevent="enter()"></textarea>
+    <textarea name="note" id="note" cols="76" rows="50" v-model="note.text" v-on:keypress.ctrl.enter.prevent="enter()"></textarea>
     <router-link to="/calendar">
       <div id="submit" v-on:click="enter()"> Submit </div>
     </router-link>
@@ -18,6 +18,10 @@ export default {
       date: new Date(),
       note: {
         text: this.$store.state.editing.currentText,
+        categories: [
+          "Brainstorming",
+          "Hypothesis"
+        ]
       },
       key: this.$store.state.editing.dateStr,
       value: this.$store.state.editing.isoStr,
@@ -42,6 +46,7 @@ export default {
         this.$store.commit('DELETE_TODAYS', {key: this.key, value: this.value});
         this.$store.commit('DONE_EDITING');
       }
+      this.$router.push({ path: '/calendar' });
     },
     alrt() {
       alert("Are you sure? ")
