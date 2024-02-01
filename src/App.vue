@@ -1,16 +1,16 @@
 <template>
   <h1>App</h1>
   <div class="all">
-    <aside-first id="aside"></aside-first>
+    <aside-view></aside-view>
     <router-view class="view"/>
   </div>
 </template>
 
 <script>
-import AsideFirst from './components/AsideFirst.vue'
+import AsideView from './views/AsideView.vue'
 
 export default {
-  components: { AsideFirst },
+  components: { AsideView },
   name: 'App',
 }
 </script>

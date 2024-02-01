@@ -1,9 +1,9 @@
 <template>
-  <div class="aside-first">
+  <div class="aside-calendar">
     <h3>Filter By Category</h3>
     <input type="checkbox" class="select" id="select-all" name="select-all" checked v-on:click="selectAll()">
-      <label for="select-all"> SELECT ALL </label><br><br>
-    <input type="checkbox" id="brainstorm" name="brainstorm" checked="false">
+      <label id="select-all-label" for="select-all"> UNSELECT ALL </label><br><br>
+    <input type="checkbox" id="brainstorm" name="brainstorm" checked>
       <label for="brainstorm"> Brainstorming </label><br>
     <input type="checkbox" id="lists" name="lists" checked>
       <label for="lists"> Lists</label><br>
@@ -28,6 +28,12 @@ export default {
       for (let i = 1; i < checkboxes.length; i++) {
         checkboxes[i].checked = selectAllCheckbox.checked;
       }
+      let selectAllLabel = document.getElementById('select-all-label')
+      if (selectAllCheckbox.checked) {
+        selectAllLabel.innerHTML = "UNSELECT ALL"
+      } else {
+        selectAllLabel.innerHTML = "SELECT ALL"
+      }
     },
     isSelected() {
       let checkbox = document.querySelectorAll('#select-all');
@@ -47,9 +53,5 @@ export default {
 </script>
 
 <style>
-
-.aside-first {
-  background-color: rgb(87, 87, 87);
-}
 
 </style>
