@@ -11,9 +11,9 @@
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
           <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
-            <div class="icon" v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
+            <div class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
           </span>
-        </div>
+        </div> 
       </div>
       </div>
     </div>
@@ -56,6 +56,11 @@ export default {
     }
   },
   methods: {
+    // addCategoryClass(iso) {
+    //   if (iso.categories.brainstorm) {
+
+    //   }
+    // },
     changeMonth(inc) {
       if (this.monthView) {
         this.monthsOffset += inc;
