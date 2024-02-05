@@ -20,6 +20,14 @@ export default {
   methods: {
     clearData() {
       this.$store.commit('DONE_EDITING');
+      this.clearCategories();
+    },
+    clearCategories() {
+      let cats = this.$store.state.currentCategories;
+      for (let key in cats) {
+        cats[key] = false;
+      }
+      this.$store.commit('UPDATE_CATEGORIES', cats);
     },
     toggle() {
       this.$store.commit('CHANGE_VIEW');

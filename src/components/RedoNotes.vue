@@ -18,12 +18,7 @@ export default {
       date: new Date(),
       note: {
         text: this.$store.state.editing.currentText,
-        categories: {
-          brainstorm: false,
-          list: false,
-          reminder: false,
-          goal: false,
-        }
+        categories: this.$store.state.currentCategories
       },
       key: this.$store.state.editing.dateStr,
       value: this.$store.state.editing.isoStr,
@@ -40,7 +35,6 @@ export default {
       }
       this.note.categories = this.$store.state.currentCategories;
       this.clearCategories();
-      this.$router.push({ path: '/calendar' });
     },
     dlt() {
       if (!this.key) {
@@ -51,7 +45,6 @@ export default {
         this.$store.commit('DONE_EDITING');
       }
       this.clearCategories();
-      this.$router.push({ path: '/calendar' });
     },
     alrt() {
       alert("Are you sure? ")

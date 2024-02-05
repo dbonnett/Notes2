@@ -11,7 +11,7 @@
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
           <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
-            <div v-show="selectedCategories" class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
+            <div class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-show="checkCategories(iso)" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
           </span>
         </div> 
       </div>
@@ -57,15 +57,16 @@ export default {
   },
   methods: {
     checkCategories(iso) {
-      for (let key in iso.categories) {
-        if (this.selectedCategories[key] === true && iso.categories[key] === true) {
+      let note = this.$store.state.allNotes.get(iso);
+      for (let key in note.categories) {
+        if (this.selectedCategories[key] === true && note.categories[key] === true) {
           return true;
         }
       }
       return false;
     },
     clearCategories() {
-      let cats = this.$state.store.currentCategories;
+      let cats = this.$store.state.currentCategories;
       for (let key in cats) {
         cats[key] = false;
       }
