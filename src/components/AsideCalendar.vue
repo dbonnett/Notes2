@@ -3,13 +3,13 @@
     <h3>Filter By Category</h3>
     <input type="checkbox" class="select" id="select-all" name="select-all" checked v-on:click="selectAll()">
       <label id="select-all-label" for="select-all"> UNSELECT ALL </label><br><br>
-    <input type="checkbox" id="brainstorm" name="brainstorm" checked>
+    <input type="checkbox" id="brainstorm" name="brainstorm" checked v-model="currentCategories.brainstorm" @click="updateCategories">
       <label for="brainstorm"> Brainstorming </label><br>
-    <input type="checkbox" id="lists" name="lists" checked>
+    <input type="checkbox" id="lists" name="lists" checked v-model="currentCategories.list" @click="updateCategories">
       <label for="lists"> Lists</label><br>
-    <input type="checkbox" id="reminders" name="reminders" checked>
+    <input type="checkbox" id="reminders" name="reminders" checked v-model="currentCategories.reminder" @click="updateCategories">
       <label for="reminders"> Reminders </label><br>
-    <input type="checkbox" id="goals" name="goals" checked>
+    <input type="checkbox" id="goals" name="goals" checked v-model="currentCategories.goal" @click="updateCategories">
       <label for="goals"> Goals </label><br>
   </div>
 </template>
@@ -18,7 +18,7 @@
 export default {
   data() {
     return {
-
+      currentCategories: this.$store.state.currentCategories
     }
   },
   methods: {
@@ -34,6 +34,10 @@ export default {
       } else {
         selectAllLabel.innerHTML = "SELECT ALL"
       }
+      this.$store.commit("UPDATE_CATEGORIES", this.currentCategories); 
+    },
+    updateCategories() {
+      this.$store.commit('UPDATE_CATEGORIES', this.currentCategories);
     }
   }, 
   computed: {

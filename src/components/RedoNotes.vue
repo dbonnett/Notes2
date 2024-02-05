@@ -39,6 +39,7 @@ export default {
         this.$store.commit('DONE_EDITING');
       }
       this.note.categories = this.$store.state.currentCategories;
+      this.clearCategories();
       this.$router.push({ path: '/calendar' });
     },
     dlt() {
@@ -49,10 +50,18 @@ export default {
         this.$store.commit('DELETE_TODAYS', {key: this.key, value: this.value});
         this.$store.commit('DONE_EDITING');
       }
+      this.clearCategories();
       this.$router.push({ path: '/calendar' });
     },
     alrt() {
       alert("Are you sure? ")
+    },
+    clearCategories() {
+      let cats = this.$store.state.currentCategories;
+      for (let key in cats) {
+        cats[key] = true;
+      }
+      this.$store.commit('UPDATE_CATEGORIES', cats);
     }
   }
 }

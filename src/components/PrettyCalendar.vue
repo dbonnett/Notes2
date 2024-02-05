@@ -11,7 +11,7 @@
       <div class="body">
         <div class="row" v-for="arr in spans" v-bind:key="arr">
           <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
-            <div class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
+            <div v-show="selectedCategories" class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
           </span>
         </div> 
       </div>
@@ -56,11 +56,21 @@ export default {
     }
   },
   methods: {
-    // addCategoryClass(iso) {
-    //   if (iso.categories.brainstorm) {
-
-    //   }
-    // },
+    checkCategories(iso) {
+      for (let key in iso.categories) {
+        if (this.selectedCategories[key] === true && iso.categories[key] === true) {
+          return true;
+        }
+      }
+      return false;
+    },
+    clearCategories() {
+      let cats = this.$state.store.currentCategories;
+      for (let key in cats) {
+        cats[key] = false;
+      }
+      this.$store.commit('UPDATE_CATEGORIES', cats);
+    },
     changeMonth(inc) {
       if (this.monthView) {
         this.monthsOffset += inc;
@@ -217,6 +227,9 @@ export default {
       }
       this.$store.commit('SET_MONTH_NUMBERS', arr);
       return arr;
+    },
+    selectedCategories() {
+      return this.$store.state.currentCategories;
     }
   }
 }

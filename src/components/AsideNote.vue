@@ -16,12 +16,7 @@
 export default {
   data() {
     return {
-      currentCategories: {
-        brainstorm: false,
-        list: false,
-        reminder: false,
-        goal: false,
-      },
+      currentCategories: this.$store.state.currentCategories
     }
   },
   methods: {
