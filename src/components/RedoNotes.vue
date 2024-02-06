@@ -20,8 +20,8 @@ export default {
     return {
       date: new Date(),
       note: {
-        text: this.$store.state.editing.currentText,
-        categories: this.$store.state.currentCategories
+        text: Object.assign(this.$store.state.editing.currentText),
+        categories: Object.assign(this.$store.state.currentCategories)
       },
       key: this.$store.state.editing.dateStr,
       value: this.$store.state.editing.isoStr,
@@ -54,7 +54,7 @@ export default {
       alert("Are you sure? ")
     },
     clearCategories() {
-      let cats = this.$store.state.currentCategories;
+      let cats = Object.assign(this.$store.state.currentCategories);
       for (let key in cats) {
         cats[key] = true;
       }

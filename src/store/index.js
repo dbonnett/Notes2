@@ -23,6 +23,9 @@ export default createStore({
     searchMap: new Map()
   },
   getters: {
+    getNotes(state) {
+      return state.allNotes;
+    }
   },
   mutations: {
     ADD_SEARCH_ITEM(state, payload) {

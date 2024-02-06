@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     checkCategories(iso) {
-      let note = this.$store.state.allNotes.get(iso);
+      let note = this.$store.getters.getNotes.get(iso);
       for (let key in note.categories) {
         if (this.selectedCategories[key] === true && note.categories[key] === true) {
           return true;

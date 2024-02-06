@@ -26,7 +26,10 @@ export default {
       let selectAllCheckbox = document.getElementById('select-all');
       let checkboxes = document.querySelectorAll('input');
       for (let i = 1; i < checkboxes.length; i++) {
-        checkboxes[i].checked = selectAllCheckbox.checked;
+        checkboxes[i].checked = selectAllCheckbox.checked;  
+      }
+      for (let key in this.currentCategories) {
+        this.currentCategories[key] = selectAllCheckbox.checked;
       }
       let selectAllLabel = document.getElementById('select-all-label')
       if (selectAllCheckbox.checked) {
