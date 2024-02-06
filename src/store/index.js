@@ -44,7 +44,7 @@ export default createStore({
     },
     EDITING(state, payload) {
       state.editing.currentText = state.allNotes.get(payload.isoStr).text;
-      state.currentCategories = state.allNotes.get(payload.isoStr).categories;
+      state.currentCategories = {...state.allNotes.get(payload.isoStr).categories};
       state.editing.isoStr = payload.isoStr;
       state.editing.dateStr = payload.dateStr;
     },

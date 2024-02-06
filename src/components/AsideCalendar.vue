@@ -18,7 +18,7 @@
 export default {
   data() {
     return {
-      currentCategories: this.$store.state.currentCategories
+      currentCategories: {...this.$store.state.currentCategories}
     }
   },
   methods: {
