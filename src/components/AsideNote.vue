@@ -21,7 +21,9 @@ export default {
   },
   methods: {
     updateCategories() {
-      this.$store.commit('UPDATE_CATEGORIES', this.currentCategories);
+      setTimeout( () => {
+        this.$store.commit('UPDATE_CATEGORIES', this.currentCategories);
+      }, 0)
     }
   }
 }

@@ -34,10 +34,12 @@ export default {
       } else {
         selectAllLabel.innerHTML = "SELECT ALL"
       }
-      this.$store.commit("UPDATE_CATEGORIES", this.currentCategories); 
+      this.updateCategories();
     },
     updateCategories() {
-      this.$store.commit('UPDATE_CATEGORIES', this.currentCategories);
+      setTimeout( () => {
+        this.$store.commit('UPDATE_CATEGORIES', this.currentCategories);
+      }, 0)
     }
   }, 
   computed: {

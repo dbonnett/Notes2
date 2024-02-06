@@ -8,6 +8,9 @@
     <router-link to="/calendar">
       <div id="delete" v-on:click="dlt">DELETE</div> 
     </router-link>
+    <router-link to="/calendar">
+      <div id="clear" v-on:click="clearCategories">Back to calendar</div>
+    </router-link>
   </div>
 </template>
 
@@ -34,6 +37,7 @@ export default {
         this.$store.commit('DONE_EDITING');
       }
       this.note.categories = this.$store.state.currentCategories;
+      this.$router.push('/calendar');
       this.clearCategories();
     },
     dlt() {

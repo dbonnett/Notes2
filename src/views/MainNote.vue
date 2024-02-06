@@ -1,7 +1,6 @@
 <template>
   <div class="main-note">
     <redo-notes></redo-notes>
-    <router-link to="/calendar">Back to calendar</router-link>
   </div>
 </template>
 
