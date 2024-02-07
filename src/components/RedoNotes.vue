@@ -29,16 +29,22 @@ export default {
   },
   methods: {
     enter() {
-      if (!this.key) {
-        this.$store.commit('UPDATE_NOTES', { isoStr: this.date.toISOString(), noteObj: this.note});
-        this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString()});
-      } else {
-        this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
-        this.$store.commit('DONE_EDITING');
+      for (let key in this.currentCategories) {
+        if (this.currentCategories[key]) {
+          if (!this.key) {
+            this.$store.commit('UPDATE_NOTES', { isoStr: this.date.toISOString(), noteObj: this.note});
+            this.$store.commit('NOTES_BY_DAY', { dateStr: this.date.toDateString(), isoStr: this.date.toISOString()});
+          } else {
+            this.$store.commit('UPDATE_NOTES', {isoStr: this.value, noteObj: this.note});
+            this.$store.commit('DONE_EDITING');
+          }
+          this.note.categories = {...this.$store.state.currentCategories};
+          this.$router.push('/calendar');
+          this.clearCategories();
+          return;
+        }
       }
-      this.note.categories = {...this.$store.state.currentCategories};
-      this.$router.push('/calendar');
-      this.clearCategories();
+      window.alert("must select a category");
     },
     dlt() {
       if (!this.key) {
@@ -59,6 +65,11 @@ export default {
         cats[key] = true;
       }
       this.$store.commit('UPDATE_CATEGORIES', cats);
+    }
+  },
+  computed: {
+    currentCategories() {
+      return this.$store.state.currentCategories
     }
   }
 }
