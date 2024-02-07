@@ -78,6 +78,9 @@ export default createStore({
     },
     UPDATE_CATEGORIES(state, cat) {
       state.currentCategories = cat;
+    },
+    NEW_CATEGORY(state, cat) {
+      state.currentCategories[cat] = false;
     }
   },
   actions: {
