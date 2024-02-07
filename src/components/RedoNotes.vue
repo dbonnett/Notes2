@@ -54,7 +54,7 @@ export default {
       alert("Are you sure? ")
     },
     clearCategories() {
-      let cats = Object.assign(this.$store.state.currentCategories);
+      let cats = this.$store.state.currentCategories;
       for (let key in cats) {
         cats[key] = true;
       }
