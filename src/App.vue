@@ -1,5 +1,4 @@
 <template>
-  <h1>App</h1>
   <div class="all">
     <aside-view></aside-view>
     <router-view class="view"/>
@@ -29,11 +28,16 @@ body {
   height: 100%;
 }
 
+aside-view {
+  position: absolute;
+}
+
 .all {
   display: flex;
   flex-direction: row;
   width: 100%;
   height: 100%;
+  position: absolute
 }
 
 #aside {

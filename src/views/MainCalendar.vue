@@ -1,10 +1,10 @@
 <template>
   <div class="main-calendar">
-  <pretty-calendar></pretty-calendar>
-  <router-link id="note-router" v-bind:to="{name: 'note'}">
-    <div v-on:click="clearData">Make a note</div>
-  </router-link>
-  <div v-on:click="toggle">TOGGLE VIEW!</div>
+    <pretty-calendar class="pretty"></pretty-calendar>
+    <router-link id="note-router" v-bind:to="{name: 'note'}">
+      <div v-on:click="clearData">Make a note</div>
+    </router-link>
+    <div v-on:click="toggle">TOGGLE VIEW!</div>
   </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
     clearData() {
       this.$store.commit('DONE_EDITING');
       this.clearCategories();
+      this.$router.push('/')
     },
     clearCategories() {
       let cats = this.$store.state.currentCategories;
@@ -31,7 +32,7 @@ export default {
     },
     toggle() {
       this.$store.commit('CHANGE_VIEW');
-    }
+    },
   },
   computed: {
     monthView() {
@@ -47,14 +48,24 @@ export default {
       }
       this.$store.commit('SET_MONTH_NUMBERS', arr);
       return arr;
-    }
+    },
+  },
+  created() {
+    window.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'n') {
+        this.clearData();
+      }
+    });
   }
 }
 </script>
 
 <style>
+.main-calendar {
+  position: relative;
+}
 
-pretty-calendar {
+.pretty {
   height: 100%;
 }
 

@@ -1,25 +1,27 @@
 <template>
   <div class="pretty-calendar">
     <h1 style="text-align: center;">{{ yearlyViewYear() }}</h1>
-    <div>
-      <div class="change-month" v-on:click=this.changeMonth(-1)>^</div>
-    </div>
-    <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
-    <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
-      <div class="bundler" v-on:click="goToMonth(month)">
-      <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</h1>
-      <div class="body">
-        <div class="row" v-for="arr in spans" v-bind:key="arr">
-          <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
-            <div class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-show="checkCategories(iso)" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
-          </span>
-        </div> 
+    <div class="arrow-fixer">
+      <div>
+        <img src="../assets/left-arrow.png" class="change-month left" v-on:click=this.changeMonth(-1)>
       </div>
+      <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
+        <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
+          <div class="bundler" v-on:click="goToMonth(month)">
+          <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</h1>
+          <div class="body">
+            <div class="row" v-for="arr in spans" v-bind:key="arr">
+              <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
+                <div class="icon"  v-for="iso in todaysNotes(setDate(num + daysAdded(month)))" v-bind:key="iso" v-show="checkCategories(iso)" v-on:click="edit({isoStr: iso, dateStr: setDate(num + daysAdded()).toDateString()})"></div>
+              </span>
+            </div> 
+          </div>
+          </div>
+        </div>
       </div>
-    </div>
-    </div>
-    <div style="margin-top:5px">
-      <div class="change-month" v-on:click=this.changeMonth(1)>v</div>
+      <div style="margin-top:5px">
+        <img src="../assets/right-arrow.png" class="change-month right" v-on:click=this.changeMonth(1)>
+      </div>
     </div>
   </div>
 </template>
@@ -302,11 +304,6 @@ span {
   background-color: green;
 }
 
-.change-month {
-  size: 30;
-  color: red;
-}
-
 .yearly {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -332,7 +329,33 @@ span {
 }
 
 .outer-shell {
-  height: 94%;
+  height: 100%;
+  top: 0;
+}
+
+.change-month {
+  z-index: 1;
+}
+
+.arrow-fixer {
+  height:100%;
+  position: relative;
+}
+
+.right {
+  right: 15px;
+  top: 50%;
+}
+
+.left {
+  left: 15px;
+  top: 50%;
+}
+
+img {
+  height: 50px;
+  margin: 0px;
+  position: absolute;
 }
 
 </style>
