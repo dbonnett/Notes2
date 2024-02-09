@@ -1,14 +1,14 @@
 <template>
   <div class="pretty-calendar">
-    <h1 style="text-align: center;">{{ yearlyViewYear() }}</h1>
+    <p v-show="yearlyViewYear()" class="yearly-heading">{{ yearlyViewYear() }}</p>
     <div class="arrow-fixer">
       <div>
-        <img src="../assets/left-arrow.png" class="change-month left" v-on:click=this.changeMonth(-1)>
+        <img src="../assets/left2.png" class="change-month left" v-on:click=this.changeMonth(-1)>
       </div>
       <div  v-bind:class="{'yearly': !monthView}" class="outer-shell">
         <div class="month-container" v-for="month in numberOfMonths" v-bind:key="month">
           <div class="bundler" v-on:click="goToMonth(month)">
-          <h1 id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</h1>
+          <p id="month">{{ months[whichMonth(month).getMonth()] }} {{ conditionalYear(month) }}</p>
           <div class="body">
             <div class="row" v-for="arr in spans" v-bind:key="arr">
               <span v-for="num in arr" v-bind:key="num">{{ setDate(num + daysAdded(month)).getDate() }}
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div style="margin-top:5px">
-        <img src="../assets/right-arrow.png" class="change-month right" v-on:click=this.changeMonth(1)>
+        <img src="../assets/right2.png" class="change-month right" v-on:click=this.changeMonth(1)>
       </div>
     </div>
   </div>
@@ -335,6 +335,16 @@ span {
 
 .change-month {
   z-index: 1;
+  top: 50%;
+  opacity: 30%;
+  height: 45px;
+  margin: 0px;
+  position: absolute;
+}
+
+.change-month:hover {
+  opacity: 100%;
+  height: 50px;
 }
 
 .arrow-fixer {
@@ -343,19 +353,20 @@ span {
 }
 
 .right {
-  right: 15px;
-  top: 50%;
+  right: 10px;
 }
 
 .left {
-  left: 15px;
-  top: 50%;
+  left: 10px;
 }
 
-img {
-  height: 50px;
-  margin: 0px;
-  position: absolute;
+.year-heading {
+  font-size: large;
+  text-align: center;
+  height: auto;
 }
 
+.year {
+  display: none;
+}
 </style>

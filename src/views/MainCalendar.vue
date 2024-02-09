@@ -1,10 +1,8 @@
 <template>
   <div class="main-calendar">
     <pretty-calendar class="pretty"></pretty-calendar>
-    <router-link id="note-router" v-bind:to="{name: 'note'}">
-      <div v-on:click="clearData">Make a note</div>
-    </router-link>
-    <div v-on:click="toggle">TOGGLE VIEW!</div>
+    <img id="new-note" src="../assets/note-cropped.png" v-on:click="clearData"/>
+    <img id="toggle" src="../assets/calendar-cropped.png" v-on:click="toggle"/>
   </div>
 </template>
 
@@ -21,7 +19,6 @@ export default {
     clearData() {
       this.$store.commit('DONE_EDITING');
       this.clearCategories();
-      this.$router.push('/')
     },
     clearCategories() {
       let cats = this.$store.state.currentCategories;
@@ -29,6 +26,7 @@ export default {
         cats[key] = false;
       }
       this.$store.commit('UPDATE_CATEGORIES', cats);
+      this.$router.push('/')
     },
     toggle() {
       this.$store.commit('CHANGE_VIEW');
@@ -78,4 +76,31 @@ export default {
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+#toggle {
+  z-index: 1;
+  position: absolute;
+  height: 60px;
+  bottom: 80px;
+  right: 110px;
+  opacity: 30%;
+  border: 3px;
+}
+
+#toggle:hover {
+  opacity: 100%;
+}
+
+#new-note {
+  z-index: 1;
+  position: absolute;
+  height: 60px;
+  bottom: 80px;
+  right: 20px;
+  opacity: 30%;
+  border: 3px;
+}
+
+#new-note:hover {
+  opacity: 100%;
+}
 </style>
