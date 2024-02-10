@@ -1,16 +1,11 @@
 <template>
   <div class="redo-note" @keypress.ctrl.d.prevent="dlt()">
     <h2>{{ date.toDateString() }}</h2>
-    <textarea name="note" id="note" cols="76" rows="50" v-model="note.text" v-on:keypress.ctrl.enter.prevent="enter()"></textarea>
-    <router-link to="/calendar">
-      <div id="submit" v-on:click="enter()"> Submit </div>
-    </router-link>
-    <router-link to="/calendar">
-      <div id="delete" v-on:click="dlt">DELETE</div> 
-    </router-link>
-    <router-link to="/calendar">
-      <div id="clear" v-on:click="clearCategories">Back to calendar</div>
-    </router-link>
+    <textarea name="note" id="note" cols="76" rows="37" v-model="note.text" v-on:keypress.ctrl.enter.prevent="enter()"></textarea>
+    <div id="buttons">
+      <span id="submit" v-on:click="enter()"> Save </span>
+      <span id="delete" v-on:click="dlt()"> Discard </span> 
+    </div>
   </div>
 </template>
 
@@ -55,6 +50,7 @@ export default {
         this.$store.commit('DONE_EDITING');
       }
       this.clearCategories();
+      this.$router.push('/calendar');
     },
     alrt() {
       alert("Are you sure? ")
@@ -80,10 +76,19 @@ export default {
     text-align: center;
   }
   #submit, #delete {
+    display: inline-block;
     font-weight: bold;
-    background-color: gray;
+    border: none;
     width: 80px;
     text-align: center;
+    padding: 8px;
+    color: rgb(47, 47, 47)
+  }
+  #delete {
+    background-color: rgb(198, 198, 198)
+  }
+  #submit {
+    background-color: rgb(221, 221, 221)
   }
   h2 {
     color: green;
@@ -91,9 +96,21 @@ export default {
   textarea {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 15px;
+    height: 100%;
     padding: 1in;
   }
   .note {
     height: 20px;
   }
+
+  #buttons {
+    z-index: 1;
+    display: inline-block;
+    position: absolute;
+    bottom: 5%;
+    right: 50px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+
 </style>

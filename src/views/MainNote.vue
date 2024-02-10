@@ -1,6 +1,6 @@
 <template>
   <div class="main-note">
-    <redo-notes></redo-notes>
+    <redo-notes id="redo-notes"></redo-notes>
   </div>
 </template>
 
@@ -13,4 +13,7 @@ export default {
 </script>
 
 <style>
+redo-notes {
+  position: absolute;
+}
 </style>
