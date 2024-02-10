@@ -234,6 +234,16 @@ export default {
     selectedCategories() {
       return this.$store.state.currentCategories;
     }
+  },
+  created() {
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') {
+        this.changeMonth(1);
+      }
+      if (e.key === 'ArrowLeft') {
+        this.changeMonth(-1);
+      }
+    });
   }
 }
 </script>
@@ -281,6 +291,7 @@ span {
 }
 #month {
   background-color: rgb(173, 173, 173);
+  font-size: 35px;
   margin: 0px;
   height: 50px;
   text-align: center;
