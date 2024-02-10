@@ -18,6 +18,7 @@ export default {
 
 html {
   height: 100%;
+  font-family: Arial
 }
 
 body {

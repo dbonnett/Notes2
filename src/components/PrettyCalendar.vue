@@ -208,6 +208,14 @@ export default {
       date.setMonth(this.today.getMonth() + offset);
       return date;
     },
+    arrowHandler(e) {
+      if (e.key === 'ArrowRight') {
+        this.changeMonth(1);
+      }
+      if (e.key === 'ArrowLeft') {
+        this.changeMonth(-1);
+      }
+    }
   },
   mounted() {
     this.highlightAll();
@@ -236,14 +244,10 @@ export default {
     }
   },
   created() {
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') {
-        this.changeMonth(1);
-      }
-      if (e.key === 'ArrowLeft') {
-        this.changeMonth(-1);
-      }
-    });
+    window.addEventListener('keydown', this.arrowHandler);
+  }, 
+  unmounted() {
+    window.removeEventListener('keydown', this.arrowHandler)
   }
 }
 </script>
@@ -276,18 +280,11 @@ span {
   border-color: black;
 }
 .this-month {
-  background-color: rgb(240, 252, 248);
+  background-color: rgb(233, 254, 255);
   color: black !important;
   border-color: black;
   border-style: solid;
   border-width: 1px;
-}
-#trial {
-  height: 20px;
-  width: 100%;
-  background-color: rgb(114, 198, 114);
-  text-align: left;
-  border-radius: 10px;
 }
 #month {
   background-color: rgb(173, 173, 173);
@@ -301,10 +298,9 @@ span {
 }
 .this-day {
   font-weight: bolder;
-  background-color: rgb(226, 252, 243);
-}
+  background-color: rgb(201, 239, 241);}
 .icon {
-  background-color: rgb(0, 176, 0);
+  background-color: rgb(110, 219, 214);
   height: 10px;
   border-radius: 5px;
   text-align: left;
@@ -312,7 +308,7 @@ span {
 }
 
 .this-month .icon {
-  background-color: green;
+  background-color: rgb(0, 126, 128);
 }
 
 .yearly {
