@@ -1,8 +1,10 @@
 <template>
   <div class="main-calendar">
     <pretty-calendar class="pretty"></pretty-calendar>
-    <img id="new-note" src="../assets/note-cropped.png" v-on:click="clearData"/>
-    <img id="toggle" src="../assets/calendar-cropped.png" v-on:click="toggle"/>
+    
+      <img id="new-note" src="../assets/note-cropped.png" v-on:click="clearData"/>
+      <img id="toggle" src="../assets/calendar-cropped.png" v-on:click="toggle"/>
+    
   </div>
 </template>
 
@@ -103,4 +105,6 @@ export default {
 #new-note:hover {
   opacity: 100%;
 }
+
+
 </style>

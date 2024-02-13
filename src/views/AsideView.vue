@@ -27,9 +27,10 @@ export default {
 <style>
 
 .aside-view {
-  width: 300px;
+  width: 280px;
   height: 100%;
   background-color: rgb(99, 99, 99);
+  padding: 12px;
 }
 
 #settings {
