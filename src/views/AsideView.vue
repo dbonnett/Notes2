@@ -31,6 +31,12 @@ export default {
   height: 100%;
   background-color: rgb(99, 99, 99);
   padding: 12px;
+  font-size: 17px;
+}
+
+input[type='checkbox'] {
+  height:15px;
+  width: 15px;
 }
 
 #settings {
